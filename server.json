@@ -1,0 +1,37 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.pepitahq/mcp",
+  "title": "pepita",
+  "description": "Read, edit, save, and publish your pepita websites from Claude.",
+  "websiteUrl": "https://pepita.dev",
+  "repository": {
+    "url": "https://github.com/pepitahq/pepita-mcp",
+    "source": "github"
+  },
+  "version": "0.1.1",
+  "packages": [
+    {
+      "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
+      "identifier": "@pepitahq/mcp",
+      "version": "0.1.1",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "PEPITA_TOKEN",
+          "description": "pepita bearer token; overrides the token written to ~/.pepita/config.json by `pepita login`.",
+          "isRequired": false,
+          "isSecret": true
+        },
+        {
+          "name": "PEPITA_API_BASE",
+          "description": "pepita API host. Defaults to https://app.pepita.dev.",
+          "isRequired": false,
+          "isSecret": false
+        }
+      ]
+    }
+  ]
+}

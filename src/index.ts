@@ -44,7 +44,7 @@ function resolveAuth(): { apiBase: string; token: string } {
 
 async function main(): Promise<void> {
   const { apiBase, token } = resolveAuth();
-  const server = new McpServer({ name: 'pepita', version: '0.1.0' });
+  const server = new McpServer({ name: 'pepita', version: '0.1.1' });
   registerTools(server, makeClient({ apiBase, token }));
   await server.connect(new StdioServerTransport());
   // stdio transport keeps the process alive until the client disconnects.
