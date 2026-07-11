@@ -15,7 +15,7 @@ import { join } from 'node:path';
 import { readFileSync } from 'node:fs';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { makeClient, registerTools } from '@pepitahq/mcp-core';
+import { makeClient, registerTools, SERVER_INSTRUCTIONS } from '@pepitahq/mcp-core';
 
 const DEFAULT_API_BASE = 'https://app.pepita.dev';
 
@@ -44,7 +44,10 @@ function resolveAuth(): { apiBase: string; token: string } {
 
 async function main(): Promise<void> {
   const { apiBase, token } = resolveAuth();
-  const server = new McpServer({ name: 'pepita', version: '0.2.0' });
+  const server = new McpServer(
+    { name: 'pepita', version: '0.2.0' },
+    { instructions: SERVER_INSTRUCTIONS }
+  );
   registerTools(server, makeClient({ apiBase, token }));
   await server.connect(new StdioServerTransport());
   // stdio transport keeps the process alive until the client disconnects.
