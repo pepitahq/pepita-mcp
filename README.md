@@ -23,8 +23,8 @@ claude mcp add pepita -- npx -y @pepitahq/mcp
 
 ## Tools
 
-`list_sites`, `get_status`, `list_files`, `read_file`, `write_file` (into the
-working copy), `publish` (→ live), and preview links: `create_preview`,
+`list_sites`, `get_status`, `list_site_files`, `read_site_file`, `write_site_file`
+(into the working copy), `publish` (→ live), and preview links: `create_preview`,
 `list_previews`, `update_preview` (push the current site onto an existing
 link), `delete_preview`.
 
