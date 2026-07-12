@@ -40,6 +40,9 @@ Ten tools — five that read your sites, five that write, publish, or manage pre
   links: `create_preview`, `update_preview` (push the current site onto an existing
   link), `delete_preview`
 
+`list_site_files` / `read_site_file` read the working copy by default, the live
+site (`state: "live"`), or a specific preview link (`preview: "<name>"`).
+
 Destructive / account-level actions (custom domains, team, billing, deleting a
 site) are deliberately not exposed — those stay in the editor UI, where their
 confirmations live. (Deleting a preview link is exposed: it only stops serving,
