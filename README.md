@@ -31,8 +31,10 @@ npx @pepitahq/mcp
 claude mcp add pepita-local -- npx -y @pepitahq/mcp
 ```
 
-Also published to the [MCP Registry](https://registry.modelcontextprotocol.io) as
-`dev.pepita.mcp/mcp` — registry-aware MCP clients can discover and add it by that name.
+Also listed in the [MCP Registry](https://registry.modelcontextprotocol.io) as
+`dev.pepita.mcp/mcp`. If your MCP client can browse the registry, find **pepita**
+there and add it in one step; otherwise use the `npx` / `claude mcp add` setup above
+(the registry entry points at the same `@pepitahq/mcp` package).
 
 ## Tools
 
