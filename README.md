@@ -31,6 +31,9 @@ npx @pepitahq/mcp
 claude mcp add pepita-local -- npx -y @pepitahq/mcp
 ```
 
+Also published to the [MCP Registry](https://registry.modelcontextprotocol.io) as
+`dev.pepita.mcp/mcp` — registry-aware MCP clients can discover and add it by that name.
+
 ## Tools
 
 Ten tools — five that read your sites, five that write, publish, or manage previews:
