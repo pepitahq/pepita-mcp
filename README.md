@@ -38,16 +38,18 @@ there and add it in one step; otherwise use the `npx` / `claude mcp add` setup a
 
 ## Tools
 
-Thirteen tools — six that read your sites, five that write, publish, or manage
-previews, and two that manage video assets:
+Fourteen tools — six that read your sites, five that write, publish, or manage
+previews, and three that manage assets:
 
 - **Read** — `list_sites`, `get_status`, `list_site_files`, `read_site_file`, `list_previews`,
   `list_video_assets`
 - **Write** — `write_site_file` (into the working copy), `publish` (→ live), and preview
   links: `create_preview`, `update_preview` (push the current site onto an existing
   link), `delete_preview`
-- **Video assets** — `get_video_asset_original_url` (an expiring download link for the
-  uploaded original), `delete_video_asset` (removes the asset and stops its streams)
+- **Assets** — `rename_asset` (display label only — the id and URLs never change, so
+  pages referencing the asset keep working), `get_video_asset_original_url` (an
+  expiring download link for the uploaded original), `delete_video_asset` (removes
+  the asset and stops its streams)
 
 `list_site_files` / `read_site_file` read the working copy by default, the live
 site (`state: "live"`), or a specific preview link (`preview: "<name>"`).
