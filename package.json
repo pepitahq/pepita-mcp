@@ -1,6 +1,6 @@
 {
   "name": "@pepitahq/mcp",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "mcpName": "dev.pepita.mcp/mcp",
   "description": "pepita local MCP server (stdio) — drive your pepita sites from Claude.",
   "license": "MIT",
