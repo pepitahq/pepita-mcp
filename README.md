@@ -38,12 +38,13 @@ there and add it in one step; otherwise use the `npx` / `claude mcp add` setup a
 
 ## Tools
 
-Fourteen tools — six that read your sites, five that write, publish, or manage
+Fifteen tools — six that read your sites, six that write, publish, or manage
 previews, and three that manage assets:
 
 - **Read** — `list_sites`, `get_status`, `list_site_files`, `read_site_file`, `list_previews`,
   `list_video_assets`
-- **Write** — `write_site_file` (into the working copy), `publish` (→ live), and preview
+- **Write** — `create_site` (a brand-new site, live immediately with starter content),
+  `write_site_file` (into the working copy), `publish` (→ live), and preview
   links: `create_preview`, `update_preview` (push the current site onto an existing
   link), `delete_preview`
 - **Assets** — `rename_asset` (display label only — the id and URLs never change, so
@@ -56,8 +57,9 @@ site (`state: "live"`), or a specific preview link (`preview: "<name>"`).
 
 Destructive / account-level actions (custom domains, team, billing, deleting a
 site) are deliberately not exposed — those stay in the editor UI, where their
-confirmations live. (Deleting a preview link is exposed: it only stops serving,
-and the version stays restorable from History.)
+confirmations live. Creating a site IS exposed (it destroys nothing); deleting
+one is not. (Deleting a preview link is exposed: it only stops serving, and the
+version stays restorable from History.)
 
 ## Env
 
