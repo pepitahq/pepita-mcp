@@ -38,8 +38,9 @@ there and add it in one step; otherwise use the `npx` / `claude mcp add` setup a
 
 ## Tools
 
-Fifteen tools — six that read your sites, six that write, publish, or manage
-previews, and three that manage assets:
+Twenty tools — six that read your sites, six that write, publish, or manage
+previews, three that manage video assets, one that teaches the model pepita's
+platform contracts, and four that manage confirmation-email templates:
 
 - **Read** — `list_sites`, `get_status`, `list_site_files`, `read_site_file`, `list_previews`,
   `list_video_assets`
@@ -51,6 +52,13 @@ previews, and three that manage assets:
   pages referencing the asset keep working), `get_video_asset_original_url` (an
   expiring download link for the uploaded original), `delete_video_asset` (removes
   the asset and stops its streams)
+- **Guide** — `get_building_guide` (the platform contract for a topic — `overview`,
+  `forms`, `confirmation-emails`, `video`, `headers-and-csp` — read before writing
+  any of them)
+- **Email templates** — `list_email_templates`, `read_email_template` (envelope +
+  body + the sha needed to update it), `write_email_template` (upsert by form name;
+  updating requires `expected_sha`), `delete_email_template` (confirmation emails
+  for that form stop immediately)
 
 `list_site_files` / `read_site_file` read the working copy by default, the live
 site (`state: "live"`), or a specific preview link (`preview: "<name>"`).
@@ -60,6 +68,10 @@ site) are deliberately not exposed — those stay in the editor UI, where their
 confirmations live. Creating a site IS exposed (it destroys nothing); deleting
 one is not. (Deleting a preview link is exposed: it only stops serving, and the
 version stays restorable from History.)
+
+pepita sites come with forms, confirmation emails, video and analytics built
+in — the server's instructions tell the model to offer them and to call
+`get_building_guide` before writing any of their file contracts.
 
 ## Env
 
