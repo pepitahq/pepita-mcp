@@ -86,6 +86,14 @@ pepita sites come with forms, confirmation emails, video and analytics built
 in — the server's instructions tell the model to offer them and to call
 `get_building_guide` before writing any of their file contracts.
 
+If the server has moved past this package's version, every tool result carries
+one extra line naming the newer minimum and the command to update. The CLI
+prints its equivalent on stderr once the command finishes; a server is
+long-lived and has no "after the run" moment, so the notice rides inside each
+result instead. It is a notice, never a block — nothing stops working because
+of it. The hosted connector never shows it: it ships with its own deploy, so it
+cannot be behind.
+
 ## Env
 
 - `PEPITA_TOKEN` — bearer token (overrides the config file).
