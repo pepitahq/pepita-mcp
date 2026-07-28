@@ -62,13 +62,16 @@ read or export what visitors submitted through your forms:
   for that form stop immediately)
 - **Form submissions** — `get_form_records_count` (every form that has received a
   submission, with how many it holds — counts cover every source together),
-  `get_form_records` (one form's submissions, newest first, up to 100 at a time;
-  reads the editor preview's own test submissions by default, `live: true` for
-  the published site, `preview: "<name>"` for one preview link), `get_form_export_url`
-  (a link to download one form's submissions as a spreadsheet — same source
-  selection and the same editor-preview default as `get_form_records`, so the
-  two tools never disagree about which rows they mean; the link expires in
-  15 minutes and the file may be capped for a very large collection)
+  `get_form_records` (one form's submissions, newest first; reads the editor
+  preview's own test submissions by default, `live: true` for the published
+  site, `preview: "<name>"` for one preview link. Over 100 matching records it
+  returns the COUNT instead, so the assistant can ask before filling your screen
+  — `confirm_large: true` then returns them all. A form holds at most 1000
+  entries in total, and one whose entries carry more than 50 different field
+  names can only be read as a file), `get_form_export_url` (a link to download
+  one form's submissions as `xlsx`, `csv` or `json` — same source selection and
+  the same editor-preview default as `get_form_records`, so the two tools never
+  disagree about which rows they mean; the link expires in 15 minutes)
 
 `list_site_files` / `read_site_file` read the working copy by default, the live
 site (`state: "live"`), or a specific preview link (`preview: "<name>"`).
