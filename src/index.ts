@@ -45,7 +45,7 @@ function resolveAuth(): { apiBase: string; token: string } {
 async function main(): Promise<void> {
   const { apiBase, token } = resolveAuth();
   const server = new McpServer(
-    { name: 'pepita', version: '0.8.0' },
+    { name: 'pepita', version: '0.9.0' },
     { instructions: SERVER_INSTRUCTIONS }
   );
   registerTools(server, makeClient({ apiBase, token }));

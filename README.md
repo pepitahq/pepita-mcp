@@ -38,10 +38,10 @@ there and add it in one step; otherwise use the `npx` / `claude mcp add` setup a
 
 ## Tools
 
-Twenty-two tools — six that read your sites, six that write, publish, or manage
+Twenty-three tools — six that read your sites, six that write, publish, or manage
 previews, three that manage video assets, one that teaches the model pepita's
-platform contracts, four that manage confirmation-email templates, and two that
-read what visitors submitted through your forms:
+platform contracts, four that manage confirmation-email templates, and three that
+read or export what visitors submitted through your forms:
 
 - **Read** — `list_sites`, `get_status`, `list_site_files`, `read_site_file`, `list_previews`,
   `list_video_assets`
@@ -64,7 +64,11 @@ read what visitors submitted through your forms:
   submission, with how many it holds — counts cover every source together),
   `get_form_records` (one form's submissions, newest first, up to 100 at a time;
   reads the editor preview's own test submissions by default, `live: true` for
-  the published site, `preview: "<name>"` for one preview link)
+  the published site, `preview: "<name>"` for one preview link), `get_form_export_url`
+  (a link to download one form's submissions as a spreadsheet — same source
+  selection and the same editor-preview default as `get_form_records`, so the
+  two tools never disagree about which rows they mean; the link expires in
+  15 minutes and the file may be capped for a very large collection)
 
 `list_site_files` / `read_site_file` read the working copy by default, the live
 site (`state: "live"`), or a specific preview link (`preview: "<name>"`).
