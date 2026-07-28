@@ -16,6 +16,7 @@ import { readFileSync } from 'node:fs';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { makeClient, registerTools, SERVER_INSTRUCTIONS } from '@pepitahq/mcp-core';
+import type { PepitaApi } from '@pepitahq/shared';
 
 /** This binary's version, in ONE place inside the source.
  *
@@ -54,6 +55,50 @@ function resolveAuth(): { apiBase: string; token: string } {
   return { apiBase, token };
 }
 
+/**
+ * Append a one-line upgrade notice to every tool result once the server has
+ * advised one. The CLI prints its equivalent notice on stderr AFTER the run
+ * (`noticeUpgrade` in `index.ts`) — this server is long-lived and has no
+ * "after the run" moment, so the notice has to ride inside each tool result
+ * instead, where the model (and whoever is reading its output) will actually
+ * see it. Without this, `client.upgradeAdvised()` was captured on every
+ * request and read by nothing: a stale client silently kept reading every
+ * form-data source while the response labelled it a single one (I-3 in the
+ * 2026-07-28 review), with no visible sign anywhere that the server had
+ * already said so.
+ *
+ * Monkey-patches the one instance's `registerTool`, not the SDK globally.
+ * `mcp-core`'s `registerTools` always calls it as `(name, config, handler)` —
+ * the 2/4/5-arg overloads belong to the deprecated `.tool()` method, never
+ * used here — so wrapping that exact shape is safe without reproducing the
+ * SDK's generic tool-config types.
+ */
+function withUpgradeNotice(server: McpServer, client: PepitaApi): void {
+  const original = server.registerTool.bind(server);
+  (server as unknown as { registerTool: typeof server.registerTool }).registerTool = ((
+    name: string,
+    config: unknown,
+    handler: (...a: unknown[]) => Promise<{ content: unknown[]; isError?: boolean }>
+  ) => {
+    const wrapped = async (...a: unknown[]) => {
+      const result = await handler(...a);
+      const min = client.upgradeAdvised();
+      if (!min) return result;
+      return {
+        ...result,
+        content: [
+          ...result.content,
+          {
+            type: 'text',
+            text: `pepita-mcp is behind (running ${VERSION}); the server now expects ${min} or newer — update with \`npx -y @pepitahq/mcp\`.`
+          }
+        ]
+      };
+    };
+    return original(name as never, config as never, wrapped as never);
+  }) as typeof server.registerTool;
+}
+
 async function main(): Promise<void> {
   const { apiBase, token } = resolveAuth();
   const server = new McpServer(
@@ -63,7 +108,9 @@ async function main(): Promise<void> {
   // `clientId` identifies THIS published binary so the server can advise an
   // upgrade when the API has moved past it. The remote worker deliberately
   // passes none: it always ships with its own deploy, so it cannot be stale.
-  registerTools(server, makeClient({ apiBase, token, clientId: `mcp/${VERSION}` }));
+  const client = makeClient({ apiBase, token, clientId: `mcp/${VERSION}` });
+  withUpgradeNotice(server, client);
+  registerTools(server, client);
   await server.connect(new StdioServerTransport());
   // stdio transport keeps the process alive until the client disconnects.
 }
