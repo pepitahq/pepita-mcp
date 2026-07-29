@@ -28,7 +28,7 @@ import type { PepitaApi } from '@pepitahq/shared';
  *  catches that: this package has no test runner. The version lives in four
  *  places in total (package.json, server.json twice, and here) — CLAUDE.md's
  *  release notes list them, and the release flow is the only check. */
-const VERSION = '0.10.0';
+const VERSION = '0.11.0';
 
 const DEFAULT_API_BASE = 'https://app.pepita.dev';
 

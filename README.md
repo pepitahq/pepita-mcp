@@ -57,9 +57,11 @@ read or export what visitors submitted through your forms:
   `forms`, `confirmation-emails`, `video`, `headers-and-csp` — read before writing
   any of them)
 - **Email templates** — `list_email_templates`, `read_email_template` (envelope +
-  body + the sha needed to update it), `write_email_template` (upsert by form name;
-  updating requires `expected_sha`), `delete_email_template` (confirmation emails
-  for that form stop immediately)
+  body), `write_email_template` (upsert by form name; updating an existing
+  template changes the WORKING COPY only, a brand-new one is saved as it is
+  created), `save_email_template` (makes the working copy the version people
+  receive — the same act as the editor's Save button on the template's row),
+  `delete_email_template` (confirmation emails for that form stop immediately)
 - **Form submissions** — `get_form_records_count` (every form that has received a
   submission, with how many it holds — counts cover every source together),
   `get_form_records` (one form's submissions, newest first; reads the editor
