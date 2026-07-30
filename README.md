@@ -38,10 +38,11 @@ there and add it in one step; otherwise use the `npx` / `claude mcp add` setup a
 
 ## Tools
 
-Twenty-three tools — six that read your sites, six that write, publish, or manage
+Twenty-six tools — six that read your sites, six that write, publish, or manage
 previews, three that manage video assets, one that teaches the model pepita's
-platform contracts, four that manage confirmation-email templates, and three that
-read or export what visitors submitted through your forms:
+platform contracts, five that manage confirmation-email templates, two for the
+images inside one, and three that read or export what visitors submitted through
+your forms:
 
 - **Read** — `list_sites`, `get_status`, `list_site_files`, `read_site_file`, `list_previews`,
   `list_video_assets`
@@ -62,6 +63,12 @@ read or export what visitors submitted through your forms:
   created), `save_email_template` (makes the working copy the version people
   receive — the same act as the editor's Save button on the template's row),
   `delete_email_template` (confirmation emails for that form stop immediately)
+- **Template images** — `list_email_template_images` (what a template holds, each
+  with the public URL to reference in an `<img src>`), `delete_email_template_image`
+  (by that name — if the body still references it, the picture breaks in the next
+  email that goes out). There is **no upload tool**: an assistant has no practical
+  way to hand over image bytes, so uploading is yours to do with the CLI
+  (`pepita template image add`) or in the editor's Files tab
 - **Form submissions** — `get_form_records_count` (every form that has received a
   submission, with how many it holds — counts cover every source together),
   `get_form_records` (one form's submissions, newest first; reads the editor
