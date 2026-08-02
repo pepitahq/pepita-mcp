@@ -8,13 +8,19 @@
     "url": "https://github.com/pepitahq/pepita-mcp",
     "source": "github"
   },
-  "version": "0.12.0",
+  "version": "0.12.1",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.pepita.dev/mcp"
+    }
+  ],
   "packages": [
     {
       "registryType": "npm",
       "registryBaseUrl": "https://registry.npmjs.org",
       "identifier": "@pepitahq/mcp",
-      "version": "0.12.0",
+      "version": "0.12.1",
       "transport": {
         "type": "stdio"
       },

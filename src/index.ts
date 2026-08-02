@@ -27,8 +27,15 @@ import type { PepitaApi } from '@pepitahq/shared';
  *  It CAN still disagree with package.json and server.json, and nothing here
  *  catches that: this package has no test runner. The version lives in four
  *  places in total (package.json, server.json twice, and here) — CLAUDE.md's
- *  release notes list them, and the release flow is the only check. */
-const VERSION = '0.12.0';
+ *  release notes list them, and the release flow is the only check.
+ *
+ *  SINCE 0.12.1 THIS BINARY IS THE FALLBACK, NOT THE FRONT DOOR. `server.json`
+ *  declares a `remotes` entry for mcp.pepita.dev ahead of this npm package, so
+ *  a registry-driven install lands on the HOSTED server — which ships with its
+ *  own deploy and therefore cannot go stale. This file is what a client without
+ *  remote-MCP support falls back to, and it is the copy that can drift: it
+ *  bundles pepita-api.ts, so its API paths freeze at install time. */
+const VERSION = '0.12.1';
 
 const DEFAULT_API_BASE = 'https://app.pepita.dev';
 
