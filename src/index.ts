@@ -15,7 +15,7 @@ import { join } from 'node:path';
 import { readFileSync } from 'node:fs';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { makeClient, registerTools, SERVER_INSTRUCTIONS } from '@pepitahq/mcp-core';
+import { makeClient, registerTools, SERVER_INSTRUCTIONS, SERVER_VERSION } from '@pepitahq/mcp-core';
 import type { PepitaApi } from '@pepitahq/shared';
 
 /** This binary's version, in ONE place inside the source.
@@ -25,9 +25,14 @@ import type { PepitaApi } from '@pepitahq/shared';
  *  longer disagree with each other.
  *
  *  It CAN still disagree with package.json and server.json, and nothing here
- *  catches that: this package has no test runner. The version lives in four
- *  places in total (package.json, server.json twice, and here) — CLAUDE.md's
- *  release notes list them, and the release flow is the only check.
+ *  catches that: this package has no test runner. The version now lives in THREE
+ *  places (package.json and server.json twice) rather than four: this file adopts
+ *  mcp-core's SERVER_VERSION, which its own comment asked for "at its next
+ *  release" — and 0.13.0 is that release. Worth doing because the drift it warned
+ *  about had already happened again: SERVER_VERSION sat at 0.12.0 while this
+ *  package was 0.12.1, so the hosted worker announced a number npm never
+ *  published. The remaining two are literals by necessity — npm reads
+ *  package.json and the registry reads server.json, neither of which can import.
  *
  *  SINCE 0.12.1 THIS BINARY IS THE FALLBACK, NOT THE FRONT DOOR. `server.json`
  *  declares a `remotes` entry for mcp.pepita.dev ahead of this npm package, so
@@ -35,7 +40,7 @@ import type { PepitaApi } from '@pepitahq/shared';
  *  own deploy and therefore cannot go stale. This file is what a client without
  *  remote-MCP support falls back to, and it is the copy that can drift: it
  *  bundles pepita-api.ts, so its API paths freeze at install time. */
-const VERSION = '0.12.1';
+const VERSION = SERVER_VERSION;
 
 const DEFAULT_API_BASE = 'https://app.pepita.dev';
 

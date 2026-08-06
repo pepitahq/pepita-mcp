@@ -38,25 +38,25 @@ there and add it in one step; otherwise use the `npx` / `claude mcp add` setup a
 
 ## Tools
 
-Twenty-six tools — six that read your sites, six that write, publish, or manage
-previews, three that manage video assets, one that teaches the model pepita's
-platform contracts, five that manage confirmation-email templates, two for the
-images inside one, and three that read or export what visitors submitted through
-your forms:
+Thirty-five tools — six that read your sites, six that write, publish, or manage
+previews, three for video, one that teaches the model pepita's platform contracts,
+five that manage confirmation-email templates, two for the images inside one, three
+that read or export what visitors submitted through your forms, and nine for
+repeating content collections:
 
-- **Read** — `list_sites`, `get_status`, `list_site_files`, `read_site_file`, `list_previews`,
-  `list_video_assets`
+- **Read** — `list_sites`, `get_site_status`, `list_site_files`, `read_site_file`,
+  `list_previews`, `list_videos`
 - **Write** — `create_site` (a brand-new site, live immediately with starter content),
-  `write_site_file` (into the working copy), `publish` (→ live), and preview
+  `write_site_file` (into the working copy), `publish_site` (→ live), and preview
   links: `create_preview`, `update_preview` (push the current site onto an existing
   link), `delete_preview`
-- **Assets** — `rename_asset` (display label only — the id and URLs never change, so
-  pages referencing the asset keep working), `get_video_asset_original_url` (an
-  expiring download link for the uploaded original), `delete_video_asset` (removes
-  the asset and stops its streams)
+- **Video** — `rename_video` (display label only — the id and URLs never change, so
+  pages referencing the video keep working), `get_video_original_url` (an
+  expiring download link for the uploaded original), `delete_video` (removes
+  the video and stops its streams)
 - **Guide** — `get_building_guide` (the platform contract for a topic — `overview`,
-  `forms`, `confirmation-emails`, `video`, `headers-and-csp` — read before writing
-  any of them)
+  `forms`, `confirmation-emails`, `video`, `headers-and-csp`, `dynamic-content` —
+  read before writing any of them)
 - **Email templates** — `list_email_templates`, `read_email_template` (envelope +
   body), `write_email_template` (upsert by form name; updating an existing
   template changes the WORKING COPY only, a brand-new one is saved as it is
@@ -68,10 +68,10 @@ your forms:
   (by that name — if the body still references it, the picture breaks in the next
   email that goes out). There is **no upload tool**: an assistant has no practical
   way to hand over image bytes, so uploading is yours to do with the CLI
-  (`pepita template image add`) or in the editor's Files tab
+  (`pepita email template image add`) or in the editor's Forms tab
 - **Form submissions** — `get_form_records_count` (every form that has received a
   submission, with how many it holds — counts cover every source together),
-  `get_form_records` (one form's submissions, newest first; reads the editor
+  `list_form_records` (one form's submissions, newest first; reads the editor
   preview's own test submissions by default, `live: true` for the published
   site, `preview: "<name>"` for one preview link. Over 100 matching records it
   returns the COUNT instead, so the assistant can ask before filling your screen
@@ -79,8 +79,29 @@ your forms:
   entries in total, and one whose entries carry more than 50 different field
   names can only be read as a file), `get_form_export_url` (a link to download
   one form's submissions as `xlsx`, `csv` or `json` — same source selection and
-  the same editor-preview default as `get_form_records`, so the two tools never
+  the same editor-preview default as `list_form_records`, so the two tools never
   disagree about which rows they mean; the link expires in 15 minutes)
+- **Content collections** — repeating structured content: a blog, a menu, a team
+  page. Two halves, and they are separate tools. The SHAPE:
+  `list_content_templates`, `read_content_template` (the complete HTML document for
+  ONE item — keep its `<head>` and `<style>`, only the head's first `<style>`
+  survives into the page), `write_content_template` (a brand-new one is saved as it
+  is created; changing an existing one writes the working copy until
+  `save_content_template`), `save_content_template`, `delete_content_template` (the
+  items survive — writing a template with the same name again brings them back).
+  The ITEMS: `list_content_records`, `add_content_records` (an ARRAY, so many in one
+  call — all of them land or none do, and a refusal names every bad item by its
+  position), `update_content_record` (the WHOLE item, not a patch),
+  `delete_content_record`.
+
+  Three things to know. **The name is the pairing** — a page shows a collection
+  through `<pepita-content mode="list" name="blog">`, which is an ordinary site
+  file you write with `write_site_file`, and the name must match the template's or
+  the page renders the static markup inside the tag and nothing else, with no error
+  anywhere. **Every item needs a `title`** — it is what the item's web address is
+  made from, and pepita mints the last few characters itself, so never invent an
+  address. And **an item is live the moment it is written**: content has no publish
+  step, unlike every other write here.
 
 `list_site_files` / `read_site_file` read the working copy by default, the live
 site (`state: "live"`), or a specific preview link (`preview: "<name>"`).
