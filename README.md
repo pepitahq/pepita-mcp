@@ -38,7 +38,7 @@ there and add it in one step; otherwise use the `npx` / `claude mcp add` setup a
 
 ## Tools
 
-Thirty-five tools — six that read your sites, six that write, publish, or manage
+Thirty-seven tools — six that read your sites, six that write, publish, or manage
 previews, three for video, one that teaches the model pepita's platform contracts,
 five that manage confirmation-email templates, two for the images inside one, three
 that read or export what visitors submitted through your forms, and nine for
@@ -92,7 +92,7 @@ repeating content collections:
   The ITEMS: `list_content_records`, `add_content_records` (an ARRAY, so many in one
   call — all of them land or none do, and a refusal names every bad item by its
   position), `update_content_record` (the WHOLE item, not a patch),
-  `delete_content_record`.
+  `delete_content_record`, `publish_content_record`, `unpublish_content_record`.
 
   Three things to know. **The name is the pairing** — a page shows a collection
   through `<pepita-content mode="list" name="blog">`, which is an ordinary site
