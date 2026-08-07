@@ -41,7 +41,7 @@ there and add it in one step; otherwise use the `npx` / `claude mcp add` setup a
 Thirty-seven tools — six that read your sites, six that write, publish, or manage
 previews, three for video, one that teaches the model pepita's platform contracts,
 five that manage confirmation-email templates, two for the images inside one, three
-that read or export what visitors submitted through your forms, and nine for
+that read or export what visitors submitted through your forms, and eleven for
 repeating content collections:
 
 - **Read** — `list_sites`, `get_site_status`, `list_site_files`, `read_site_file`,
