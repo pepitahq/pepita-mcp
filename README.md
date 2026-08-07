@@ -100,7 +100,7 @@ repeating content collections:
   the page renders the static markup inside the tag and nothing else, with no error
   anywhere. **Every item needs a `title`** — it is what the item's web address is
   made from, and pepita mints the last few characters itself, so never invent an
-  address. And **an item is live the moment it is written**: content has no publish
+  address. And **a new item is a draft**: it shows in the editor and on preview links, and reaches the live site only when published. There is no site-wide publish
   step, unlike every other write here.
 
 `list_site_files` / `read_site_file` read the working copy by default, the live
